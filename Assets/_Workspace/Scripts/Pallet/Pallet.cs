@@ -70,7 +70,7 @@ public class Pallet : MonoBehaviour
 
     public Food GetFood(FoodVariant variant)
     {
-        for (int i = 0; i < _containers.Count; i++)
+        for (int i = _containers.Count-1; i >= 0; i--)
         {
             if (_containers[i].Food == variant)
             {
