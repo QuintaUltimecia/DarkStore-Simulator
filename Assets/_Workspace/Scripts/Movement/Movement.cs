@@ -8,6 +8,9 @@ public class Movement : BaseBehaviour, IContainSpeed
     [SerializeField]
     private float _rotationFade = 12f;
 
+    [SerializeField]
+    private float _gravity = 30f;
+
     private MoveSpeed _moveSpeed;
     private CharacterController _characterController;
     private IInput _input;
@@ -71,6 +74,7 @@ public class Movement : BaseBehaviour, IContainSpeed
             return;
 
         Vector3 position = Transform.forward * _moveSpeed.CurrentValue * Time.deltaTime;
+        position.y -= _gravity * Time.deltaTime;
 
         if (_input.GetAxis() != Vector3.zero)
             _characterController.Move(position);
