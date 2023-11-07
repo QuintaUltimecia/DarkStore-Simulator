@@ -12,8 +12,3 @@ public class FoodSO : ScriptableObject
     [field: SerializeField]
     public FoodVariant Variant { get; private set; }
 }
-
-public enum FoodVariant
-{
-    Empty, Apple, Cucumber
-}
