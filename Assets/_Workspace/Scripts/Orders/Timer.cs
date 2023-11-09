@@ -6,47 +6,33 @@ using System;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class Timer : BaseBehaviour
 {
-    public int Value { get; private set; }
-    private TextMeshProUGUI _text;
-
-    private Coroutine _timerRoutine;
-    private bool _isInitialized = false;
-
+    public int Value { get; private set; } = 0;
     public event Action OnEndTimer;
 
-    public void Init(int value)
+    private TextMeshProUGUI _text;
+    private Coroutine _timerRoutine;
+
+    public void StartTimer(int time)
     {
-        Value = value;
-        _text = GetComponent<TextMeshProUGUI>();
-        _text.text = Value.ToString();
-
-        _isInitialized = true;
-    }
-
-    public void StartTimer()
-    {
-        if (_isInitialized == false)
-        {
-            Debug.LogWarning($"{this} is not initialized!");
-            return;
-        }
-
+        Value = time;
         _timerRoutine = StartCoroutine(TimerRoutine());
     }
 
     public void StopTimer()
     {
-        if (_isInitialized == false)
-        {
-            Debug.LogWarning($"{this} is not initialized!");
-            return;
-        }
-
         if (_timerRoutine != null)
         {
             StopCoroutine(_timerRoutine);
             _timerRoutine = null;
         }
+    }
+
+    protected override void Init()
+    {
+        _text = GetComponent<TextMeshProUGUI>();
+        _text.text = Value.ToString();
+
+        _isInitialized = true;
     }
 
     private IEnumerator TimerRoutine()

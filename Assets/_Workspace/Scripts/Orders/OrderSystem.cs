@@ -10,13 +10,6 @@ public class OrderSystem : BaseBehaviour
 
     private int _orderCount = 0;
 
-    public void Init(OrderCreator orderCreator, BagContainer bagContainer, Pallet pallet)
-    {
-        _orderCreator = orderCreator;
-        _bagContainer = bagContainer;
-        _pallet = pallet;   
-    }
-
     public void CreateOrder()
     {
         _bagContainer.CreateBag(_orderCount, (value) => CloseOrder(value));
@@ -82,5 +75,12 @@ public class OrderSystem : BaseBehaviour
         else
             for (int i = 0; i < _bagContainer.Bags.ToList().Count; i++)
                 _bagContainer.Bags.ToList()[i].ActiveButton(false);
+    }
+
+    protected override void Init()
+    {
+        _orderCreator = DIContainer.GetMonoBehaviour<OrderCreator>();
+        _bagContainer = DIContainer.GetMonoBehaviour<BagContainer>();
+        _pallet = DIContainer.GetMonoBehaviour<Pallet>();
     }
 }

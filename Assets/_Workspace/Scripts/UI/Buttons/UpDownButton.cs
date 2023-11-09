@@ -18,7 +18,7 @@ public class UpDownButton : BaseButton
         up, down
     }
 
-    public void Init()
+    public void Initialize()
     {
         Instance = this;
         _image = GetComponent<Image>();

@@ -1,15 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TapHandler : MonoBehaviour, IPointerClickHandler
+public class TapHandler : BaseBehaviour, IPointerClickHandler
 {
     private Camera _camera;
     private RaycastHit _raycastHit;
-
-    public void Init(Camera camera)
-    {
-        _camera = camera;
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -22,7 +17,7 @@ public class TapHandler : MonoBehaviour, IPointerClickHandler
                 if (UpDownButton.Instance.B_Variant == UpDownButton.ButtonVariant.up)
                 {
                     Food food = stand.GetFood();
-                    Pallet pallet = TapInjector.GetMonoBehaviour<Pallet>();
+                    Pallet pallet = DIContainer.GetMonoBehaviour<Pallet>();
 
                     if (pallet.AddItem(food))
                     {
@@ -38,7 +33,7 @@ public class TapHandler : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
-                    Pallet pallet = TapInjector.GetMonoBehaviour<Pallet>();
+                    Pallet pallet = DIContainer.GetMonoBehaviour<Pallet>();
                     Food food = pallet.GetFood(stand.FoodVariant);
 
                     if (stand.SetFood(food))
@@ -59,7 +54,7 @@ public class TapHandler : MonoBehaviour, IPointerClickHandler
                 if (UpDownButton.Instance.B_Variant == UpDownButton.ButtonVariant.up)
                 {
                     Food food = shipmentBox.GetFood();
-                    Pallet pallet = TapInjector.GetMonoBehaviour<Pallet>();
+                    Pallet pallet = DIContainer.GetMonoBehaviour<Pallet>();
 
                     if (pallet.AddItem(food))
                     {
@@ -72,7 +67,7 @@ public class TapHandler : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
-                    Pallet pallet = TapInjector.GetMonoBehaviour<Pallet>();
+                    Pallet pallet = DIContainer.GetMonoBehaviour<Pallet>();
                     Food food = pallet.GetFood(shipmentBox.FoodVariant);
 
                     if (food != null)
@@ -80,6 +75,11 @@ public class TapHandler : MonoBehaviour, IPointerClickHandler
                 }
             }
         }
+    }
+
+    protected override void Init()
+    {
+        _camera = DIContainer.GetMonoBehaviour<MainCamera>().Camera;
     }
 
     //public void OnDrawGizmos()

@@ -20,11 +20,6 @@ public class PickUpAnimation : BaseBehaviour
 
     private event Action _callBack;
 
-    private void Awake()
-    {
-        _transform = transform;
-    }
-
     public override void OnDisable() { }
     public override void OnEnable() { }
 
@@ -48,5 +43,10 @@ public class PickUpAnimation : BaseBehaviour
         _callBack = callBack;
         _y = 0;
         _updates.Add(this);
+    }
+
+    protected override void Init()
+    {
+        _transform = transform;
     }
 }

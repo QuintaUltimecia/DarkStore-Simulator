@@ -24,14 +24,14 @@ public class ShipmentBox : MonoBehaviour
 
         foreach (Food food in _foodPool.Pool)
         {
-            food.Init();
+            food.Initialize();
             food.CreateFood(FoodVariant);
         }
 
         for (int i = 0; i < _foodContainers.Count; i++)
         {
             Food food = Instantiate(_foodPrefab);
-            food.Init();
+            food.Initialize();
             food.CreateFood(FoodVariant);
             _foodContainers[i].SetFood(food);
             food.ResetPosition(false);

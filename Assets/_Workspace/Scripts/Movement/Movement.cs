@@ -5,6 +5,9 @@ public class Movement : BaseBehaviour, IContainSpeed
 {
     public Transform Transform { get; private set; }
 
+    [field: SerializeField]
+    public float MoveSpeed { get; private set; } = 4f;
+
     [SerializeField]
     private float _rotationFade = 12f;
 
@@ -18,14 +21,6 @@ public class Movement : BaseBehaviour, IContainSpeed
     private bool _isMoving;
 
     public System.Action<bool> OnMove;
-
-    public void Init(IInput input, float speed)
-    {
-        _input = input;
-        Transform = transform;
-        _characterController = GetComponent<CharacterController>();
-        _moveSpeed = new MoveSpeed(speed);
-    }
 
     public void ResetRotate() =>
         Transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -62,6 +57,14 @@ public class Movement : BaseBehaviour, IContainSpeed
             Move();
             Rotate();
         }
+    }
+
+    protected override void Init()
+    {
+        _input = DIContainer.GetMonoBehaviour<JoyStick>();
+        Transform = transform;
+        _characterController = GetComponent<CharacterController>();
+        _moveSpeed = new MoveSpeed(MoveSpeed);
     }
 
     private void Move()

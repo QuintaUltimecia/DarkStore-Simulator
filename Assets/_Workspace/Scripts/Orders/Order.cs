@@ -47,8 +47,8 @@ public class Order : MonoBehaviour
             _currentFoods.Add(newFood);
         }
 
-        _timer.Init(120);
-        _timer.StartTimer();
+        _timer.Initialize();
+        _timer.StartTimer(120);
     }
 
     public void SetNumber(int number)

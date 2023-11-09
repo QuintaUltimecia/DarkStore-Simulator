@@ -1,18 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipmentCar : MonoBehaviour
+public class ShipmentCar : BaseBehaviour
 {
     [SerializeField]
     private List<ShipmentBox> _shipmentBox = new List<ShipmentBox>();
-
-    public void Init()
-    {
-        foreach (var item in _shipmentBox)
-        {
-            item.Init();
-        }
-    }
 
     public ShipmentBox GetBox(FoodVariant variant)
     {
@@ -23,5 +15,13 @@ public class ShipmentCar : MonoBehaviour
         }
 
         return null;
+    }
+
+    protected override void Init()
+    {
+        foreach (var item in _shipmentBox)
+        {
+            item.Init();
+        }
     }
 }

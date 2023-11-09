@@ -19,10 +19,10 @@ public class SmartphoneAnimation : MonoBehaviour
     private Camera _camera;
     private event Action _callBack;
 
-    public void Init()
+    public void Initialize()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _camera = TapInjector.GetMonoBehaviour<MainCamera>().Camera;
+        _camera = DIContainer.GetMonoBehaviour<MainCamera>().Camera;
 
         _offset = _camera.pixelHeight;
         _openPosition = _rectTransform.anchoredPosition.y;

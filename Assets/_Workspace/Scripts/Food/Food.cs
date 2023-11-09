@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PickUpAnimation))]
-public class Food : MonoBehaviour
+public class Food : BaseBehaviour
 {
     public FoodSO FoodSO { get; private set; }
 
@@ -11,15 +11,6 @@ public class Food : MonoBehaviour
     private Transform _transform;
     private PickUpAnimation _animation;
     private MeshFilter _meshFilter;
-
-    public void Init()
-    {
-        _transform = transform;
-        _animation = GetComponent<PickUpAnimation>();
-        _meshFilter = GetComponent<MeshFilter>();
-
-        _foodsSO = Resources.LoadAll<FoodSO>("SO/Foods");
-    }
 
     public void CreateFood(FoodVariant foodVariant)
     {
@@ -38,5 +29,15 @@ public class Food : MonoBehaviour
             _transform.localPosition = Vector3.zero;
 
         _transform.localRotation = Quaternion.Euler(Vector3.zero);
+    }
+
+    protected override void Init()
+    {
+        _transform = transform;
+        _animation = GetComponent<PickUpAnimation>();
+        _meshFilter = GetComponent<MeshFilter>();
+
+        _foodsSO = Resources.LoadAll<FoodSO>("SO/Foods");
+        _animation.Initialize();
     }
 }

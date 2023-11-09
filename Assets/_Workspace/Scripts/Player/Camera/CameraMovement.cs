@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour
+public class CameraMovement : BaseBehaviour
 {
     public bool IsMoveToTarget { get; set; } = true;
 
@@ -17,10 +17,23 @@ public class CameraMovement : MonoBehaviour
 
     private Transform _transform;
 
-    public void Init(Transform target)
+    public override void OnEnable()
     {
-        _target = target;
-        _transform = transform;
+        _lateUpdates.Add(this);
+    }
+
+    public override void OnDisable()
+    {
+        _lateUpdates.Remove(this);
+    }
+
+    public override void OnLateTick()
+    {
+        if (_target != null && IsMoveToTarget == true)
+        {
+            Move(_target.position);
+            Rotation();
+        }
     }
 
     public void SetPosition(Vector3 position)
@@ -33,13 +46,11 @@ public class CameraMovement : MonoBehaviour
         _transform.rotation = quaternion;
     }
 
-    private void LateUpdate()
+    protected override void Init()
     {
-        if (_target != null && IsMoveToTarget == true)
-        {
-            Move(_target.position);
-            Rotation();
-        }
+        ICameraTarget target = (ICameraTarget)DIContainer.GetInterface(typeof(ICameraTarget));
+        _target = target.GetTransform();
+        _transform = transform;
     }
 
     private void Move(Vector3 position)

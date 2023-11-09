@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
-public class Player : MonoBehaviour
+public class Player : BaseBehaviour, ICameraTarget
 {
     public Movement Movement { get; private set; }
 
@@ -11,11 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PlayerAnimationController _playerAnimationController;
 
-    public void Init()
+    public Transform GetTransform() =>
+        Movement.Transform;
+
+    protected override void Init()
     {
         Movement = GetComponent<Movement>();
-
+        Movement.Initialize();
         Movement.OnMove += (value) => _playerAnimationController.Move(value);
-        //Pallet.Init();
     }
 }

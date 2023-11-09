@@ -30,7 +30,9 @@ public class BagContainer : MonoBehaviour
         }
 
         for (int i = 0; i < _orderBags.Count; i++)
-            _orderBags[i].Init(i);
+        {
+            _orderBags[i].ID = i;
+        }
     }
 
     public void CreateBag(int id, System.Action<int> closeOrder)
@@ -40,7 +42,8 @@ public class BagContainer : MonoBehaviour
 
         OrderBag newbag = Instantiate(_orderBagPrefab, _transform);
         newbag.transform.position += new Vector3(id, 0, 0);
-        newbag.Init(id);
+        newbag.Initialize();
+        newbag.ID = id;
         newbag.CloseOrderButton.OnClick += () => { closeOrder(newbag.ID); newbag.CloseOrderButton.Disable(); };
         _orderBags.Add(newbag); 
     }

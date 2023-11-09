@@ -56,7 +56,8 @@ public abstract class BasePanel : MonoBehaviour
 
             for (int i = 0; i < _panels.Count; i++)
             {
-                button = _panels[i].GetButton<T>();
+                if (_panels[i].GetButton<T>())
+                    button = _panels[i].GetButton<T>();
             }
 
             if (button == null)

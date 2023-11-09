@@ -16,7 +16,7 @@ public class EntryPoint
 
         LoadResources();
         CreateInjector();
-        Init();
+        Initialize();
         Subs();
         Start();
     }
@@ -32,21 +32,22 @@ public class EntryPoint
 
     private void CreateInjector()
     {
-        TapInjector.AddMonoBehaviour(_player.Pallet);
-        TapInjector.AddMonoBehaviour(_mainCamera);
+        DIContainer.AddMonoBehaviour(_player.Pallet);
+        DIContainer.AddMonoBehaviour(_player);
+        DIContainer.AddMonoBehaviour(_mainCamera);
+        DIContainer.AddMonoBehaviour(_mainCanvas.GetPanel<GamePanel>().JoyStick);
+        DIContainer.AddMonoBehaviour(_mainCanvas.OrderCreator);
+        DIContainer.AddMonoBehaviour(_landspace.BagContainer);
+
     }
 
-    private void Init()
+    private void Initialize()
     {
-        _player.Init();
-        _player.Movement.Init(_mainCanvas.GetPanel<GamePanel>().JoyStick, 4f);
-        _mainCamera.Init(_player.transform);
-        _orderSystem.Init(_mainCanvas.OrderCreator, _landspace.BagContainer, _player.Pallet);
-        _mainCanvas.TapHandler.Init(_mainCamera.Camera);
-        _mainCanvas.GetButton<UpDownButton>().Init();
-        _mainCanvas.SmartphoneAnimation.Init();
-
-        _landspace.ShipmentCar.Init();
+        _player.Initialize();
+        _mainCamera.Initialize();
+        _orderSystem.Initialize();
+        _mainCanvas.Initialize();
+        _landspace.Initialize();
     }
 
     private void Subs()
