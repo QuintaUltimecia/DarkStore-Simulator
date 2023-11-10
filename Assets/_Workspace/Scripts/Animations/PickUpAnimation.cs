@@ -20,10 +20,7 @@ public class PickUpAnimation : BaseBehaviour
 
     private event Action _callBack;
 
-    public override void OnDisable() { }
-    public override void OnEnable() { }
-
-    public override void OnTick()
+    protected override void OnTick()
     {
         if (_transform.localPosition != Vector3.zero)
         {

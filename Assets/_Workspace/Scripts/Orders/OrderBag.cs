@@ -25,7 +25,7 @@ public class OrderBag : BaseBehaviour
         }
     }
 
-    public override void OnTick()
+    protected override void OnTick()
     {
         if (CloseOrderButton.enabled == true)
             CloseOrderButton.SetPosition(_camera.WorldToScreenPoint(_closeOrderButtonPoint.position));
@@ -37,5 +37,15 @@ public class OrderBag : BaseBehaviour
         _camera = Camera.main;
 
         ActiveButton(false);
+    }
+
+    private void OnEnable()
+    {
+        _updates.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        _updates.Remove(this);
     }
 }

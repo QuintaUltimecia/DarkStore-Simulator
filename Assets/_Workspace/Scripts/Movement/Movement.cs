@@ -50,7 +50,7 @@ public class Movement : BaseBehaviour, IContainSpeed
 
     public MoveSpeed GetMoveSpeed() => _moveSpeed;
 
-    public override void OnTick()
+    protected override void OnTick()
     {
         if (_input != null)
         {
@@ -93,5 +93,15 @@ public class Movement : BaseBehaviour, IContainSpeed
         rotation.z = 0;
         Quaternion rotationFade = Quaternion.Lerp(Transform.rotation, rotation, _rotationFade * Time.deltaTime);
         Transform.rotation = rotationFade;
+    }
+
+    private void OnEnable()
+    {
+        _updates.Add(this);
+    }
+
+    private void OnDisable()
+    {
+       _updates.Remove(this);
     }
 }

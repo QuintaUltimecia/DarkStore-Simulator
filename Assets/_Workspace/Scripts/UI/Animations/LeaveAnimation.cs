@@ -15,6 +15,14 @@ public class LeaveAnimation : BaseBehaviour
 
     private float _moveSpeed = 4000f;
 
+    protected override void OnTick()
+    {
+        if (_rectTransform.anchoredPosition != _defaultPosition)
+        {
+            _rectTransform.anchoredPosition = Vector2.MoveTowards(_rectTransform.anchoredPosition, _defaultPosition, _moveSpeed * Time.deltaTime);
+        }
+    }
+
     private void Play()
     {
         Vector2 newPos = _defaultPosition;
@@ -43,27 +51,24 @@ public class LeaveAnimation : BaseBehaviour
 
     private void Awake()
     {
+        Initialize();
+    }
+
+    protected override void Init()
+    {
         _rectTransform = GetComponent<RectTransform>();
         _defaultPosition = _rectTransform.anchoredPosition;
     }
 
-    public override void OnEnable()
+    private void OnEnable()
     {
         Play();
 
         _updates.Add(this);
     }
 
-    public override void OnDisable()
+    private void OnDisable()
     {
         _updates.Remove(this);
-    }
-
-    public override void OnTick()
-    {
-        if (_rectTransform.anchoredPosition != _defaultPosition) 
-        {
-            _rectTransform.anchoredPosition = Vector2.MoveTowards(_rectTransform.anchoredPosition, _defaultPosition, _moveSpeed * Time.deltaTime);
-        }
     }
 }

@@ -42,7 +42,7 @@ public class OrderSystem : BaseBehaviour
         _orderCreator.RemoveOrder(id);
     }
 
-    public override void OnTick()
+    protected override void OnTick()
     {
         if (_pallet.Foods != null && _pallet.Foods.Count() > 0)
         {
@@ -82,5 +82,15 @@ public class OrderSystem : BaseBehaviour
         _orderCreator = DIContainer.GetMonoBehaviour<OrderCreator>();
         _bagContainer = DIContainer.GetMonoBehaviour<BagContainer>();
         _pallet = DIContainer.GetMonoBehaviour<Pallet>();
+    }
+
+    private void OnEnable()
+    {
+        _updates.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        _updates.Remove(this);
     }
 }

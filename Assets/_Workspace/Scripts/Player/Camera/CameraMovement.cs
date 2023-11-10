@@ -17,25 +17,6 @@ public class CameraMovement : BaseBehaviour
 
     private Transform _transform;
 
-    public override void OnEnable()
-    {
-        _lateUpdates.Add(this);
-    }
-
-    public override void OnDisable()
-    {
-        _lateUpdates.Remove(this);
-    }
-
-    public override void OnLateTick()
-    {
-        if (_target != null && IsMoveToTarget == true)
-        {
-            Move(_target.position);
-            Rotation();
-        }
-    }
-
     public void SetPosition(Vector3 position)
     {
         _transform.position = position;
@@ -44,6 +25,15 @@ public class CameraMovement : BaseBehaviour
     public void SetRotation(Quaternion quaternion)
     {
         _transform.rotation = quaternion;
+    }
+
+    protected override void OnLateTick()
+    {
+        if (_target != null && IsMoveToTarget == true)
+        {
+            Move(_target.position);
+            Rotation();
+        }
     }
 
     protected override void Init()
@@ -67,5 +57,15 @@ public class CameraMovement : BaseBehaviour
     {
         _transform.LookAt(_target.position);
         _transform.rotation = Quaternion.Euler(_transform.eulerAngles.x, 0, 0);
+    }
+
+    private void OnEnable()
+    {
+        _lateUpdates.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        _lateUpdates.Remove(this);
     }
 }

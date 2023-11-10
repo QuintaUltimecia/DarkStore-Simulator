@@ -8,29 +8,12 @@ public class TransparentAnimation : BaseBehaviour
 
     private float _moveSpeed = 1f;
 
-    private void Play()
-    {
-        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 0);
-    }
-
-    private void Awake()
+    protected override void Init()
     {
         _image = GetComponent<Image>();
     }
 
-    public override void OnEnable()
-    {
-        Play();
-
-        _updates.Add(this);
-    }
-
-    public override void OnDisable()
-    {
-        _updates.Remove(this);
-    }
-
-    public override void OnTick()
+    protected override void OnTick()
     {
         if (_image.color.a < _defaultTransparent)
         {
@@ -38,5 +21,27 @@ public class TransparentAnimation : BaseBehaviour
             newColor.a += _moveSpeed * Time.deltaTime;
             _image.color = newColor;
         }
+    }
+
+    private void Play()
+    {
+        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 0);
+    }
+
+    private void Awake()
+    {
+        Initialize();
+    }
+
+    private void OnEnable()
+    {
+        Play();
+
+        _updates.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        _updates.Remove(this);
     }
 }
