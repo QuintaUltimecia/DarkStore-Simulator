@@ -14,6 +14,9 @@ public class MainCanvas : BasePanel
     [field: SerializeField]
     public SmartphoneAnimation SmartphoneAnimation { get; private set; }
 
+    [field: SerializeField]
+    public OrdersCount OrdersCount { get; private set; }
+
     public void Initialize()
     {
         Canvas = GetComponent<Canvas>();
@@ -21,5 +24,6 @@ public class MainCanvas : BasePanel
         TapHandler.Initialize();
         GetButton<UpDownButton>().Initialize();
         SmartphoneAnimation.Initialize();
+        OrdersCount.Initialize();
     }
 }

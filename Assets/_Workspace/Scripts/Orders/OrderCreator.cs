@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class OrderCreator : MonoBehaviour
 {
+    public IEnumerable<Order> Orders { get { return _orders; } }
+    public int Count { get; private set; }
+    public event Action<int> OnOrderCreated;
+
     [SerializeField]
     private Order _orderPrefab;
 
@@ -13,15 +18,13 @@ public class OrderCreator : MonoBehaviour
 
     private List<Order> _orders = new List<Order>();
 
-    public IEnumerable<Order> Orders { get { return _orders; } }
-
-    public int Count { get; private set; }
-
     public void RemoveOrder(int id)
     {
         _orders[id].CloseOrder();
         _orders.RemoveAt(id);
         _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, _rectTransform.sizeDelta.y - _offset);
+
+        OnOrderCreated?.Invoke(_orders.Count);
     }
 
     public void CreateOrder()
@@ -40,5 +43,7 @@ public class OrderCreator : MonoBehaviour
 
         _orders.Add(newOrder);
         _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, _rectTransform.sizeDelta.y + _offset);
+
+        OnOrderCreated?.Invoke(_orders.Count);
     }
 }

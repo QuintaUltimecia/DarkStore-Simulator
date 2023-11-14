@@ -80,13 +80,10 @@ public class EntryPoint
 
             _player.Movement.Enable();
 
-            _orderSystem.CreateOrder();
-            _orderSystem.CreateOrder();
-            _orderSystem.CreateOrder();
-            _orderSystem.CreateOrder();
-            _orderSystem.CreateOrder();
-            _orderSystem.CreateOrder();
-            _orderSystem.CreateOrder();
+            for (int i = 0; i < 9; i++)
+            {
+                _orderSystem.CreateOrder();
+            }
         });
     }
 }
